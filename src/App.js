@@ -1,20 +1,18 @@
 import React from "react";
+import styled, { ThemeProvider } from "styled-components";
+import { theme } from "@smooth-ui/core-sc";
+
+import { StateProvider } from "./providers/StateProvider";
+import Container from "./components/Container";
 
 function App() {
-  alert("bonesaw is also ready");
   return (
-    <div className="App">
-      <p>test</p>
-    </div>
+    <ThemeProvider theme={theme}>
+      <StateProvider>
+        <Container></Container>
+      </StateProvider>
+    </ThemeProvider>
   );
 }
 
 export default App;
-
-/*
-TODO
-1. Proof out browser interactions - opening the popup && passing logic back and forth
-2. Proof out local storage sync. Callback on form actions?
-3. Handle application state with context/reducer hook
-3. Handle form state - reusable input with logic?
-*/
