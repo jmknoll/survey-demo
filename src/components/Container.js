@@ -24,7 +24,8 @@ const customStyles = {
 const Container = () => {
   const [state, dispatch] = React.useReducer(
     withCache(reducer),
-    JSON.parse(localStorage.getItem("survey-state")) || initialState
+    initialState
+    // JSON.parse(localStorage.getItem("survey-state")) || initialState
   );
 
   useEffect(() => {
@@ -33,16 +34,37 @@ const Container = () => {
     }, 2000);
   }, [false]);
 
-  // useEffect(() => {
-  //   // hydrate
-  // }, [false]);
-
   const sections = [Identity, Details, Favorites, Summary];
   const ActiveSection = sections[state.activeSurveySection];
 
+  const validationMap = {
+    1: ["age", "gender"],
+    2: ["favoriteBook", "favoriteColors"]
+  };
+
+  const validateInputs = () => {
+    const inputs = validationMap[state.activeSurveySection];
+    const errors = inputs
+      ? inputs
+          .map(el =>
+            state.surveyData[el] && state.surveyData[el].length ? null : el
+          )
+          .filter(el => el)
+      : [];
+    dispatch(
+      !errors || errors.length === 0
+        ? actions.setActiveSection(1)
+        : actions.setErrors(errors)
+    );
+  };
+
   return (
     <Modal isOpen={state.surveyOpen} style={customStyles}>
-      <ActiveSection dispatch={dispatch} surveyData={state.surveyData} />
+      <ActiveSection
+        dispatch={dispatch}
+        surveyData={state.surveyData}
+        errors={state.errors}
+      />
       <Row justifyContent="space-between">
         <Button
           disabled={state.activeSurveySection === 0}
@@ -55,7 +77,7 @@ const Container = () => {
         <Button
           disabled={state.activeSurveySection === sections.length - 1}
           onClick={() => {
-            dispatch(actions.setActiveSection(1));
+            validateInputs();
           }}
         >
           Next

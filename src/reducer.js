@@ -9,7 +9,8 @@ const initialState = {
     gender: null,
     favoriteBook: "",
     favoriteColors: []
-  }
+  },
+  errors: []
 };
 
 const reducer = (state, action) => {
@@ -37,6 +38,11 @@ const reducer = (state, action) => {
         ...state,
         surveyComplete: true,
         surveyOpen: false
+      };
+    case "SET_ERRORS":
+      return {
+        ...state,
+        errors: action.data.errorFields
       };
     default:
       return state;

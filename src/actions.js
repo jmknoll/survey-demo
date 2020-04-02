@@ -27,8 +27,16 @@ export const updateFormField = (fieldName, fieldValue) => {
 };
 
 export const submitSurvey = () => {
-  console.log("submitting");
   return {
     type: "SUBMIT_SURVEY"
+  };
+};
+
+export const setErrors = errorFields => {
+  return {
+    type: "SET_ERRORS",
+    data: {
+      errorFields
+    }
   };
 };

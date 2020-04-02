@@ -9,6 +9,8 @@ import {
   Box
 } from "@smooth-ui/core-sc";
 
+import { Error } from "../ui";
+
 import * as actions from "../actions";
 
 const Details = props => {
@@ -30,6 +32,7 @@ const Details = props => {
       <FormField>
         <FormFieldLabel name="Age">Age</FormFieldLabel>
         <Select
+          aria-invalid={props.errors.includes("age") ? true : null}
           onChange={event => {
             props.dispatch(
               actions.updateFormField(event.target.name, event.target.value)
@@ -47,6 +50,7 @@ const Details = props => {
             );
           })}
         </Select>
+        {props.errors.includes("age") && <Error>Age is required</Error>}
       </FormField>
 
       <FormField>
@@ -56,6 +60,7 @@ const Details = props => {
             {genders.map((gender, key) => (
               <label>
                 <Radio
+                  aria-invalid
                   checked={props.surveyData.gender === gender.value}
                   value={gender.value}
                   name="gender"

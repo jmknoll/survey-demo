@@ -1,6 +1,6 @@
+import React from "react";
 import styled from "styled-components";
-import { Button as LibButton } from "@smooth-ui/core-sc";
-import { Dialog as LibDialog } from "reakit/Dialog";
+import { Button as LibButton, Text, Box } from "@smooth-ui/core-sc";
 
 export const Row = styled.div`
   display: flex;
@@ -21,8 +21,12 @@ export const Button = styled(LibButton)`
   }
 `;
 
-export const Dialog = styled(LibDialog)`
-  border: 1px solid #ccc;
-  margin: 2rem auto;
-  padding: 2rem;
+const ErrorText = styled(Text)`
+  color: rgb(220, 53, 69);
 `;
+
+export const Error = props => (
+  <Box my={2}>
+    <ErrorText>{props.children}</ErrorText>
+  </Box>
+);
